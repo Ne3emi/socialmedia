@@ -18,6 +18,7 @@ router.post('/createPost',userController.mustBeLoggedIn,postController.create)
 router.get('/post/:id',postController.viewSingle)
 
 router.get('/profile/:username',userController.isUser,userController.isFollowing,userController.userPosts)
+//we put middle ware in the middle to carry data between functions in the req
 router.get('/profile/:username/followers',userController.isUser,userController.isFollowing,userController.userFollowers)
 router.get('/profile/:username/following',userController.isUser,userController.isFollowing,userController.userFollowing)
 router.get('/post/:id/edit',postController.viewEditScreen)
