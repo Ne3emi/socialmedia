@@ -1,4 +1,5 @@
 let Post = require('../Post')
+const { login } = require('./userController')
 exports.viewPostScreen=function(req,res){
   res.render('create-post')
 }
@@ -81,10 +82,11 @@ exports.delete=function(req,res){
   })
 }
 exports.postSearch=function(req,res){
+  console.log(`query result ${req.body.searchTerm}`)
   Post.searchPost(req.body.searchTerm).then((postsResultsb)=>{
     //console.log('query succeeded');
     postsResultsb.forEach((x)=>{
-      //console.log(x);
+      console.log(x);
     })
     res.json(postsResultsb)
   }).catch(() => {

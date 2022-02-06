@@ -48,21 +48,8 @@ exports.login=function (req,res){
       //we are adding a new key to the session object called user and we are storing in it another object which has the key of _id which has in it the user.id value from the user model
     }
     // session is an object mounted on the req object we can store in it any key value pair and access it later or destroy it, here we are storing the username from the req only if the user and password are correct, so later in the home. view we can chose which view to show
-  //  console.log(req.session);
-  //  console.log(req.session.user._id);
-   // console.log(user.data);
-    /*output: 
-Session {
-  cookie: {
-    path: '/',
-    _expires: 2021-11-06T19:23:35.063Z,
-    originalMaxAge: 86400000,
-    httpOnly: true
-  },
-  flash: {},
-  user: { username: 'Fuck' }
-}
-*/
+  
+
     res.redirect('/')
     //if the username match run the session
   }else{
@@ -74,10 +61,28 @@ Session {
     })
     
   }
-    //{"_id":"otyTisX5oY2LoXyNLikymW0F8fQVPXpI","expires":{"$date":{"$numberLong":"1635894986772"}},"session":"{\"cookie\":{\"originalMaxAge\":86399999,\"expires\":\"2021-11-02T23:16:26.772Z\",\"httpOnly\":true,\"path\":\"/\"},\"flash\":{\"errors\":[\"wtf!\"]}}"}
+    
   })
-  //this function is imported from another file which it will check for req.body and match it if it equals the database username.. so I want if it did match to print success
-  //so we always can put functions in both parenthesis. but the function there is passed as argument and called later after some action is done and the argument inside it will be passed into the result here
+
+  
+}
+
+exports.apiLogin=function (req,res){
+  let user = new User(req.body)
+  // take the username . andd password to the user object 
+  user.login(function (result){
+    
+  //login is a method we created in the object user and we will pass result and will get its value if the password Match or not
+  if(result=='correct'){
+    res.json(`correct`)
+  
+  }else{
+    res.json(`false`)
+    
+  }
+    
+  })
+
   
 }
 
