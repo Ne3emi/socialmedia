@@ -5,5 +5,7 @@ let postController = require("./controllers/postController");
 let followController = require("./controllers/followController");
 
 routerApi.post('/login',userController.apiLogin)
+routerApi.post('/create',userController.apiMustLogged,postController.apiCreate)
+
 
 module.exports=routerApi

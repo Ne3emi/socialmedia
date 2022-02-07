@@ -4,7 +4,7 @@ const User = require('../User')
 //we require user model to send back errors to the view
 const Post = require('../Post')
 const Follow = require('../Follow')
-
+const jwt = require('jsonwebtoken')
 exports.isFollowing= async function(req,res,next){
   let isOwnProfile = false
   let isHeFollowing = false
@@ -66,7 +66,14 @@ exports.login=function (req,res){
 
   
 }
-
+exports.apiMustLogged=function(req,res,next){
+  try {
+    req.apiId=jwt.verify(req.body.token,process.env.JWTSECRET)
+    next()
+  } catch (error) {
+    res.json('wrong token')
+  }
+}
 exports.apiLogin=function (req,res){
   let user = new User(req.body)
   // take the username . andd password to the user object 
@@ -74,7 +81,8 @@ exports.apiLogin=function (req,res){
     
   //login is a method we created in the object user and we will pass result and will get its value if the password Match or not
   if(result=='correct'){
-    res.json(`correct`)
+    
+  res.json(jwt.sign({_id:user.id},process.env.JWTSECRET))
   
   }else{
     res.json(`false`)

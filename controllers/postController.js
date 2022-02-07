@@ -3,7 +3,12 @@ const { login } = require('./userController')
 exports.viewPostScreen=function(req,res){
   res.render('create-post')
 }
-
+exports.apiCreate=function (req,res) {
+  let post = new Post(req.body,req.apiId._id)
+  post.createPost().then(()=>{
+    res.json('post is successfully created')
+  }).catch((err)=>res.json(err))
+}
 exports.create=function(req,res){
   let post = new Post(req.body,req.session.user._id)
   
