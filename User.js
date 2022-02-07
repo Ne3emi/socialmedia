@@ -50,8 +50,11 @@ User.prototype.register =function(){
   return new Promise(async(resolve,reject)=>{
     await this.validate()
  if(!this.errors.length){
-   await userCollection.insertOne(this.data)
-   resolve()
+   await userCollection.insertOne(this.data,(err,info)=>{
+   console.log(JSON.stringify(info));
+   resolve(info.insertedId)
+   })
+   
  }else{
    reject(this.errors)
  }

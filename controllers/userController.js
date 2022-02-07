@@ -97,11 +97,11 @@ exports.apiLogin=function (req,res){
 
 
 exports.register=  async function(req,res){
-  let user1 = new User(req.body)
+  let user = new User(req.body)
   //the html form action is pointing to /register where the input will be submitted and we can get it here via req.body and pass it to new user as argument. as we know we don't have to. define keys and. values all over in new object
   try{
- await user1.register().then(()=>{
-    req.session.user={username:user1.data.username,_id:user1.id}
+ await user.register().then((userId)=>{
+    req.session.user={username:user.data.username,_id:userId}
     req.session.save(function() {
       res.redirect('/')
     })
@@ -129,7 +129,10 @@ exports.register=  async function(req,res){
 
 exports.signout=function(req,res){
   req.session.destroy()
-  res.redirect('/')
+ 
+    res.redirect('/')
+ 
+  
 }
 
 
